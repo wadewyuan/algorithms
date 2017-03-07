@@ -53,11 +53,18 @@ public class Deque<Item> implements Iterable<Item> {
     } // remove and return the item from the front
     public Item removeLast() {
         if(isEmpty()) throw new NoSuchElementException("Removing from an empty deque");
+        Item lastItem;
+        if(first.next == null) { // remove the first node when there is only one node in queue
+            lastItem = first.item;
+            first = null;
+            size--;
+            return lastItem;
+        }
         Node<Item> tmp = first;
-        while (tmp.next.next != null) {
+        while (tmp.next.next != null) { // get the second last node
             tmp = tmp.next;
         }
-        Item lastItem = (Item) tmp.next.item;
+        lastItem = (Item) tmp.next.item;
         tmp.next = null;
         size--;
         return lastItem;
@@ -109,13 +116,9 @@ public class Deque<Item> implements Iterable<Item> {
         Deque<Integer> deque = new Deque();
         StdOut.println("Is empty ? " + deque.isEmpty());
         deque.addFirst(3);
-        deque.addFirst(1);
-        deque.addFirst(2);
-        deque.addLast(5);
-        deque.addLast(6);
-        deque.addLast(9);
         deque.removeFirst();
-        deque.removeLast();
+//        deque.removeLast();
+        deque.removeFirst();
         for(int i : deque){
             StdOut.println("Element value is: " + i);
         }
