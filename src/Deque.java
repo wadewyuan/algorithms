@@ -8,15 +8,14 @@ import java.util.NoSuchElementException;
  */
 public class Deque<Item> implements Iterable<Item> {
 
-    private Node<Item> first;
+    private Node<Item> first, last;
     private int size;
 
     public Deque() {
-        first  = null;
         size = 0;
     } // construct an empty deque
     public boolean isEmpty() {
-        return first == null;
+        return size() == 0;
     } // is the deque empty?
     public int size() {
         return size;
@@ -24,10 +23,12 @@ public class Deque<Item> implements Iterable<Item> {
     public void addFirst(Item item) {
         if(item == null) throw new NullPointerException("Item is null");
         if(isEmpty()) {
-            first = new Node<Item>(item);
+            first = new Node(item);
+            last = first;
         } else {
             Node<Item> newFirst = new Node<Item>(item);
             newFirst.next = first;
+            first.prev = newFirst;
             first = newFirst;
         }
         size++;
@@ -36,50 +37,40 @@ public class Deque<Item> implements Iterable<Item> {
         if(item == null) throw new NullPointerException("Item is null");
         if(isEmpty()) {
             first = new Node(item);
+            last = first;
         } else {
-            Node last = getLast();
             Node newLast = new Node(item);
             last.next = newLast;
+            newLast.prev = last;
+            last = newLast;
         }
         size++;
     } // add the item to the end
     public Item removeFirst() {
         if(isEmpty()) throw new NoSuchElementException("Removing from an empty deque");
         Node<Item> tmpFirst = first;
+        Item firstItem = tmpFirst.item;
         first = tmpFirst.next;
-        tmpFirst.next = null;
         size--;
-        return tmpFirst.item;
+        if(isEmpty()) last = null;
+        else first.prev = null;
+        return firstItem;
     } // remove and return the item from the front
     public Item removeLast() {
         if(isEmpty()) throw new NoSuchElementException("Removing from an empty deque");
-        Item lastItem;
-        if(first.next == null) { // remove the first node when there is only one node in queue
-            lastItem = first.item;
-            first = null;
-            size--;
-            return lastItem;
-        }
-        Node<Item> tmp = first;
-        while (tmp.next.next != null) { // get the second last node
-            tmp = tmp.next;
-        }
-        lastItem = (Item) tmp.next.item;
-        tmp.next = null;
+        Node<Item> tmpLast = last;
+        Item lastItem = tmpLast.item;
+        last = tmpLast.prev;
         size--;
+        if(isEmpty()) first = null;
+        else last.next = null;
         return lastItem;
     } // remove and return the item from the end
     @Override
     public Iterator<Item> iterator() {
         return new DequeIterator<Item>();
     } // return an iterator over items in order from front to end
-    private Node<Item> getLast() {
-        Node<Item> last = first;
-        while (last.next != null) {
-            last = last.next;
-        }
-        return last;
-    }
+
     private class DequeIterator<Item> implements Iterator<Item> {
         Node<Item> current = (Node<Item>) first;
         @Override
@@ -100,10 +91,11 @@ public class Deque<Item> implements Iterable<Item> {
     }
     private static class Node<Item> {
         Item item;
-        Node next;
+        Node next, prev;
         public Node(Item item) {
             this.item = item;
             this.next = null;
+            this.prev = null;
         }
         @Override
         public String toString() {
@@ -116,9 +108,10 @@ public class Deque<Item> implements Iterable<Item> {
         Deque<Integer> deque = new Deque();
         StdOut.println("Is empty ? " + deque.isEmpty());
         deque.addFirst(3);
-        deque.removeFirst();
-//        deque.removeLast();
-        deque.removeFirst();
+        deque.addLast(5);
+        deque.removeLast();
+        deque.removeLast();
+//        deque.removeFirst();
         for(int i : deque){
             StdOut.println("Element value is: " + i);
         }
