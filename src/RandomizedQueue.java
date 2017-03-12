@@ -19,33 +19,41 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         items = (Item[]) new Object[1];
         head = 0;
         tail = -1;
-    }                // construct an empty randomized queue
+    } // construct an empty randomized queue
     public boolean isEmpty() {
         return N == 0;
-    }                // is the queue empty?
+    } // is the queue empty?
     public int size() {
         return N;
-    }                        // return the number of items on the queue
+    } // return the number of items on the queue
     public void enqueue(Item item) {
         if(N == items.length) resize(items.length * 2);
         if(tail >= items.length - 1) tail = 0;
         else  tail++;
         items[tail] = item;
         N++;
-    }           // add the item
+    } // add the item
     public Item dequeue() {
         if(isEmpty()) throw new NoSuchElementException("Queue is empty");
         if(N > 0 && N == items.length / 4) resize(items.length / 2);
+        int rand = StdRandom.uniform(0, N);
+        int idx = (head + rand) % items.length;
+        if(idx != head) {
+            // swap the item to dequeue with the head
+            Item tmp = items[idx];
+            items[idx] = items[head];
+            items[head] = tmp;
+        }
         Item item = items[head];
         items[head] = null;
         if(head >= items.length - 1) head = 0;
         else head++;
         N--;
         return item;
-    }                    // remove and return a random item
+    } // remove and return a random item
     public Item sample() {
-        return items[StdRandom.uniform(0, N)];
-    }                    // return (but do not remove) a random item
+        return items[(head + StdRandom.uniform(0, N)) % items.length];
+    } // return (but do not remove) a random item
 
     private void resize(int size) {
         Item[] temp = (Item[]) new Object[size];
@@ -90,15 +98,19 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         randomizedQueue.enqueue(1);
         randomizedQueue.enqueue(6);
         randomizedQueue.enqueue(7);
-        randomizedQueue.dequeue();
-        randomizedQueue.enqueue(3);
-        randomizedQueue.dequeue();
 //        randomizedQueue.dequeue();
-        randomizedQueue.dequeue();
-//        randomizedQueue.enqueue(2);
+        randomizedQueue.enqueue(3);
+//        randomizedQueue.dequeue();
+//        randomizedQueue.dequeue();
+//        randomizedQueue.dequeue();
+        randomizedQueue.enqueue(2);
 
-        for(Integer i : randomizedQueue) {
+        /*for(Integer i : randomizedQueue) {
             StdOut.println(i);
+        }*/
+//        StdOut.println(randomizedQueue.sample());
+        while (!randomizedQueue.isEmpty()) {
+            StdOut.println(randomizedQueue.dequeue());
         }
     }
 }
