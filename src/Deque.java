@@ -89,7 +89,7 @@ public class Deque<Item> implements Iterable<Item> {
             throw new UnsupportedOperationException("Removing from iterator is not supported.");
         }
     }
-    private static class Node<Item> {
+    private class Node<Item> {
         Item item;
         Node next, prev;
         public Node(Item item) {
