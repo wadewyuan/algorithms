@@ -1,6 +1,8 @@
 import edu.princeton.cs.algs4.*;
 
-
+/**
+ * TODO: Backwash not handled
+ */
 public class Percolation {
 
     private int N;
@@ -10,23 +12,20 @@ public class Percolation {
 
     public Percolation(int n) {
 
-        if(n > 0) {
-            openSites = 0;
-            N = n;
-            sites = new int[N * N];
-            uf = new WeightedQuickUnionUF(N * N + 2);
-            for(int i = 0; i < N * N; i++) {
-                sites[i] = 0; // 0 stands for BLOCKED site
-            }
+        if (n <= 0) throw new IllegalArgumentException("Grid size can't be zero or negative");
 
-            // connect the virtual top site with the first row, and the virtual bottom site with last row
-            for(int i = 0; i < N; i++) {
-                uf.union(0, i + 1);
-                uf.union(N * N + 1, N * N - i);
-            }
+        openSites = 0;
+        N = n;
+        sites = new int[N * N];
+        uf = new WeightedQuickUnionUF(N * N + 2);
+        for(int i = 0; i < N * N; i++) {
+            sites[i] = 0; // 0 stands for BLOCKED site
+        }
 
-        } else {
-            throw new IllegalArgumentException("Grid size can't be zero or negative");
+        // connect the virtual top site with the first row, and the virtual bottom site with last row
+        for(int i = 0; i < N; i++) {
+            uf.union(0, i + 1);
+            uf.union(N * N + 1, N * N - i);
         }
 
     } // create n-by-n grid, with all sites blocked
