@@ -38,6 +38,7 @@ public class PercolationStats {
             for (int i = 0; i < results.length; i++) {
                 sd = sd + Math.pow(results[i] - mean(), 2);
             }
+            sd = Math.sqrt(sd / results.length);
         }
         return sd;
     } // sample standard deviation of percolation threshold
