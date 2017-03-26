@@ -36,7 +36,7 @@ public class PercolationStats {
     public double stddev() {
         if (sd == 0) {
             for (int i = 0; i < results.length; i++) {
-                sd = sd + Math.pow(results[i] - mean, 2);
+                sd = sd + Math.pow(results[i] - mean(), 2);
             }
         }
         return sd;
