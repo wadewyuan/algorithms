@@ -18,13 +18,13 @@
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdDraw;
+import java.awt.Font;
 
-import java.awt.*;
 
 public class PercolationVisualizer {
 
     // delay in miliseconds (controls animation speed)
-    private static final int DELAY = 100;
+    private static final int DELAY = 1000;
 
     // draw n-by-n percolation system
     public static void draw(Percolation perc, int n) {
