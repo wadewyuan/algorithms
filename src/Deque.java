@@ -105,8 +105,8 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     private class Node<Item> {
-        Item item;
-        Node<Item> next, prev;
+        private Item item;
+        private Node<Item> next, prev;
 
         public Node(Item item) {
             this.item = item;
