@@ -9,36 +9,41 @@ import java.util.NoSuchElementException;
  */
 public class RandomizedQueue<Item> implements Iterable<Item> {
 
-    Item[] items;
-    int N;
-    int head;
-    int tail;
+    private Item[] items;
+    private int n;
+    private int head;
+    private int tail;
 
     public RandomizedQueue() {
-        N = 0;
+        n = 0;
         items = (Item[]) new Object[1];
         head = 0;
         tail = -1;
     } // construct an empty randomized queue
+
     public boolean isEmpty() {
-        return N == 0;
+        return n == 0;
     } // is the queue empty?
+
     public int size() {
-        return N;
+        return n;
     } // return the number of items on the queue
+
     public void enqueue(Item item) {
-        if(N == items.length) resize(items.length * 2);
-        if(tail >= items.length - 1) tail = 0;
-        else  tail++;
+        if (item == null) throw new NullPointerException("Item is null");
+        if (n == items.length) resize(items.length * 2);
+        if (tail >= items.length - 1) tail = 0;
+        else tail++;
         items[tail] = item;
-        N++;
+        n++;
     } // add the item
+
     public Item dequeue() {
-        if(isEmpty()) throw new NoSuchElementException("Queue is empty");
-        if(N > 0 && N == items.length / 4) resize(items.length / 2);
-        int rand = StdRandom.uniform(0, N);
+        if (isEmpty()) throw new NoSuchElementException("Queue is empty");
+        if (n > 0 && n == items.length / 4) resize(items.length / 2);
+        int rand = StdRandom.uniform(0, n);
         int idx = (head + rand) % items.length;
-        if(idx != head) {
+        if (idx != head) {
             // swap the item to dequeue with the head
             Item tmp = items[idx];
             items[idx] = items[head];
@@ -46,24 +51,25 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         }
         Item item = items[head];
         items[head] = null;
-        if(head >= items.length - 1) head = 0;
+        if (head >= items.length - 1) head = 0;
         else head++;
-        N--;
+        n--;
         return item;
     } // remove and return a random item
+
     public Item sample() {
-        if(isEmpty()) throw new NoSuchElementException("Queue is empty");
-        return items[(head + StdRandom.uniform(0, N)) % items.length];
+        if (isEmpty()) throw new NoSuchElementException("Queue is empty");
+        return items[(head + StdRandom.uniform(0, n)) % items.length];
     } // return (but do not remove) a random item
 
     private void resize(int size) {
         Item[] temp = (Item[]) new Object[size];
-        for (int i = 0; i < N; i++) {
+        for (int i = 0; i < n; i++) {
             temp[i] = items[(head + i) % items.length];
         }
         items = temp;
         head = 0;
-        tail  = N - 1;
+        tail = n - 1;
     }
 
     public Iterator<Item> iterator() {
@@ -71,12 +77,12 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     private class RandomizedQueueIterator<Item> implements Iterator<Item> {
-        Item[] q;
-        int c = 0;
+        private Item[] q;
+        private int c = 0;
 
         RandomizedQueueIterator() {
-            q = (Item[]) new Object[N];
-            for(int i = 0; i < N; i++) {
+            q = (Item[]) new Object[n];
+            for (int i = 0; i < n; i++) {
                 q[i] = (Item) items[(head + i) % items.length];
             }
             StdRandom.shuffle(q);
@@ -84,12 +90,12 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         @Override
         public boolean hasNext() {
-            return c < N;
+            return c < n;
         }
 
         @Override
         public Item next() {
-            if(!hasNext()) throw new NoSuchElementException("Queue is empty");
+            if (!hasNext()) throw new NoSuchElementException("Queue is empty");
             return q[c++];
         }
 
@@ -121,7 +127,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             StdOut.println(randomizedQueue.dequeue());
         }
 
-        for(Integer i : randomizedQueue) {
+        for (Integer i : randomizedQueue) {
             StdOut.println(i);
         }
 

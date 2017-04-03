@@ -6,18 +6,20 @@ import edu.princeton.cs.algs4.StdOut;
  */
 public class Permutation {
     public static void main(String[] args) {
-        if(args.length >= 1) {
+        if (args.length >= 1) {
             int k = Integer.parseInt(args[0]);
-            RandomizedQueue<String> rq = new RandomizedQueue();
-            for(int n = 8; n > 0; n--) {
-                if(rq.size() < k) {
-                    rq.enqueue(StdIn.readLine());
+            RandomizedQueue<String> rq = new RandomizedQueue<String>();
+            while (!StdIn.isEmpty()) {
+                /*if (rq.size() < k) {
+                    rq.enqueue(StdIn.readString());
                 } else {
                     rq.dequeue();
-                }
+                }*/
+                rq.enqueue(StdIn.readString());
             }
-            while(rq.size() > 0) {
+            while (k > 0) {
                 StdOut.println(rq.dequeue());
+                k--;
             }
         }
     }
