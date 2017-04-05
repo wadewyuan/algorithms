@@ -1,5 +1,6 @@
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.StdRandom;
 
 /**
  * Created by wadey on 3/13/2017.
@@ -10,11 +11,6 @@ public class Permutation {
             int k = Integer.parseInt(args[0]);
             RandomizedQueue<String> rq = new RandomizedQueue<String>();
             while (!StdIn.isEmpty()) {
-                /*if (rq.size() < k) {
-                    rq.enqueue(StdIn.readString());
-                } else {
-                    rq.dequeue();
-                }*/
                 rq.enqueue(StdIn.readString());
             }
             while (k > 0) {

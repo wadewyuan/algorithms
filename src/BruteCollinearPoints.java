@@ -17,7 +17,7 @@ public class BruteCollinearPoints {
         if (points == null) throw new NullPointerException();
         if(points.length < 4) throw new IllegalArgumentException();
 
-        lineSegmentList = new ArrayList<>();
+        lineSegmentList = new ArrayList<LineSegment>();
         for(int i = 0; i < points.length; i++) {
             for(int j = i + 1; j < points.length; j++) {
                 for(int k = j + 1; k < points.length; k++) {

@@ -119,9 +119,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 //        randomizedQueue.dequeue();
         randomizedQueue.enqueue(2);
 
-        /*for(Integer i : randomizedQueue) {
-            StdOut.println(i);
-        }*/
 //        StdOut.println(randomizedQueue.sample());
         while (!randomizedQueue.isEmpty()) {
             StdOut.println(randomizedQueue.dequeue());

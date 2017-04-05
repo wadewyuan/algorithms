@@ -20,7 +20,7 @@ public class FastCollinearPoints {
             if(p == null) throw new NullPointerException();
         }
 
-        lineSegmentList = new ArrayList<>();
+        lineSegmentList = new ArrayList<LineSegment>();
         for (int i = 0; i < points.length; i++) {
             Point p = points[i];
             Arrays.sort(points);
