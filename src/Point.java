@@ -80,8 +80,8 @@ public class Point implements Comparable<Point> {
      *         argument point
      */
     public int compareTo(Point that) {
-        if(this.y != that.y) return Integer.compare(this.y, that.y);
-        else return Integer.compare(this.x, that.x);
+        if(this.y != that.y) return (this.y < that.y) ? -1 : 1;
+        else return (this.x < that.x) ? -1 : ((this.x == that.x) ? 0 : 1);
     }
 
     /**

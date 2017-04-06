@@ -15,33 +15,43 @@ public class FastCollinearPoints {
 
     public FastCollinearPoints(Point[] points) {
         if (points == null) throw new NullPointerException();
-        if(points.length < 4) throw new IllegalArgumentException();
-        for(Point p : points) {
-            if(p == null) throw new NullPointerException();
-        }
+        if (points.length < 4) throw new IllegalArgumentException();
 
         lineSegmentList = new ArrayList<LineSegment>();
+        Point[] auxPoints = new Point[points.length];
         for (int i = 0; i < points.length; i++) {
-            Point p = points[i];
-            Arrays.sort(points);
-            Arrays.sort(points, p.slopeOrder());
-            for(int j = 0; j < points.length; j++) {
+            if (points[i] == null) throw new NullPointerException();
+            auxPoints[i] = points[i];
+        }
+
+        List<Point> collinearPoints;
+        for (Point p : points) {
+            Arrays.sort(auxPoints, p.slopeOrder());
+            collinearPoints = new ArrayList<Point>();
+            collinearPoints.add(p);
+            for (int j = 0; j < auxPoints.length; j++) {
                 int n = 1;
-                while(j + n < points.length && p.slopeTo(points[j]) == p.slopeTo(points[j + n])) {
+                while (j + n < auxPoints.length && p.slopeTo(auxPoints[j]) == p.slopeTo(auxPoints[j + n])) {
+                    if (!collinearPoints.contains(auxPoints[j])) collinearPoints.add(auxPoints[j]);
+                    if (!collinearPoints.contains(auxPoints[j + n])) collinearPoints.add(auxPoints[j + n]);
                     n++;
                 }
-                if(n > 3) {
-                    lineSegmentList.add(new LineSegment(p, points[j + n - 1]));
-                    j += n;
+                if (n >= 3) {
+                    Point[] collinearPointsArr = collinearPoints.toArray(new Point[collinearPoints.size()]);
+                    Arrays.sort(collinearPointsArr);
+                    lineSegmentList.add(new LineSegment(collinearPointsArr[0], collinearPointsArr[collinearPointsArr.length - 1]));
+                    break;
                 }
             }
         }
 
 
     } // finds all line segments containing 4 or more points
+
     public int numberOfSegments() {
         return lineSegmentList.size();
     } // the number of line segments
+
     public LineSegment[] segments() {
         return lineSegmentList.toArray(new LineSegment[numberOfSegments()]);
     } // the line segments

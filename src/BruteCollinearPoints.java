@@ -15,16 +15,17 @@ public class BruteCollinearPoints {
 
     public BruteCollinearPoints(Point[] points) {
         if (points == null) throw new NullPointerException();
-        if(points.length < 4) throw new IllegalArgumentException();
+        if (points.length < 4) throw new IllegalArgumentException();
 
         lineSegmentList = new ArrayList<LineSegment>();
-        for(int i = 0; i < points.length; i++) {
-            for(int j = i + 1; j < points.length; j++) {
-                for(int k = j + 1; k < points.length; k++) {
-                    for(int l = k + 1; l < points.length; l++) {
-                        if(points[i] == null || points[j] == null || points[k] == null || points[l] == null) throw new NullPointerException();
+        for (int i = 0; i < points.length; i++) {
+            for (int j = i + 1; j < points.length; j++) {
+                for (int k = j + 1; k < points.length; k++) {
+                    for (int l = k + 1; l < points.length; l++) {
+                        if (points[i] == null || points[j] == null || points[k] == null || points[l] == null)
+                            throw new NullPointerException();
 
-                        if(points[i].slopeTo(points[j]) == points[j].slopeTo(points[k]) &&
+                        if (points[i].slopeTo(points[j]) == points[j].slopeTo(points[k]) &&
                                 points[j].slopeTo(points[k]) == points[k].slopeTo(points[l])) {
                             Point[] tmpPoints = new Point[]{points[i], points[j], points[k], points[l]};
                             Arrays.sort(tmpPoints);
