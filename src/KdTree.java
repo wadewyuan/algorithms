@@ -67,7 +67,7 @@ public class KdTree {
         } else {
             cmp = Double.compare(y, o.y);
         }
-        if (cmp < 0) return contains(o.left, x, y);
+        if (cmp <= 0) return contains(o.left, x, y);
         else if (cmp > 0) return contains(o.right, x, y);
         else return true;
     }
