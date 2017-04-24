@@ -107,7 +107,7 @@ public class KdTree {
         } else {
             cmp = Double.compare(y, o.y);
         }
-        if (cmp < 0) {
+        if (cmp <= 0) {
             o.left = put(o.left, x, y);
             o.left.vertical = !o.vertical;
             o.left.parent = o;
