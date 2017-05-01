@@ -25,12 +25,12 @@ public class PointSET {
     } // number of points in the set
 
     public void insert(Point2D p) {
-        if(p == null) throw new NullPointerException();
+        if (p == null) throw new NullPointerException();
         points.add(p);
     } // add the point to the set (if it is not already in the set)
 
     public boolean contains(Point2D p) {
-        if(p == null) throw new NullPointerException();
+        if (p == null) throw new NullPointerException();
         return points.contains(p);
     } // does the set contain point p?
 
@@ -45,7 +45,7 @@ public class PointSET {
     } // draw all points to standard draw
 
     public Iterable<Point2D> range(RectHV rect) {
-        if(rect == null) throw new NullPointerException();
+        if (rect == null) throw new NullPointerException();
         List<Point2D> resultList = new ArrayList<Point2D>();
         for (Point2D p : points) {
             if (rect.contains(p)) {
@@ -56,9 +56,9 @@ public class PointSET {
     } // all points that are inside the rectangle
 
     public Point2D nearest(Point2D p) {
-        if(p == null) throw new NullPointerException();
+        if (p == null) throw new NullPointerException();
         Point2D nearest = null;
-        Double minDistance = Double.POSITIVE_INFINITY;
+        double minDistance = Double.POSITIVE_INFINITY;
         for (Point2D q : points) {
             double d = p.distanceTo(q);
             if (d < minDistance) {
